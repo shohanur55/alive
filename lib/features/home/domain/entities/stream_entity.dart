@@ -1,5 +1,5 @@
-class StreamData {
-  const StreamData({
+class StreamEntity {
+  const StreamEntity({
     required this.id,
     required this.name,
     required this.viewers,
@@ -15,8 +15,8 @@ class StreamData {
   final String flag;
   final bool isFollowing;
 
-  StreamData copyWith({bool? isFollowing}) {
-    return StreamData(
+  StreamEntity copyWith({bool? isFollowing}) {
+    return StreamEntity(
       id: id,
       name: name,
       viewers: viewers,

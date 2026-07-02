@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../models/stream_data.dart';
+import '../../domain/entities/stream_entity.dart';
 
 class StreamCard extends StatelessWidget {
   const StreamCard({
@@ -10,7 +10,7 @@ class StreamCard extends StatelessWidget {
     required this.onFollowToggle,
   });
 
-  final StreamData stream;
+  final StreamEntity stream;
   final VoidCallback onFollowToggle;
 
   @override
