@@ -22,7 +22,9 @@ class FirebaseAuthRemoteDataSource implements AuthRemoteDataSource {
         _googleSignIn = googleSignIn ?? GoogleSignIn.instance {
     // Initialize GoogleSignIn for mobile only
     if (!kIsWeb) {
-      _googleSignIn.initialize();
+      _googleSignIn.initialize(
+        serverClientId: '293856291008-bqedc3vdqugnkpnodu2omnj1d3ihvq5g.apps.googleusercontent.com',
+      );
     }
   }
 
@@ -52,15 +54,16 @@ class FirebaseAuthRemoteDataSource implements AuthRemoteDataSource {
         if (firebaseUser == null) return null;
         return UserModel.fromFirebaseUser(firebaseUser);
       } else {
-        // Mobile: use native Google Sign-In flow
+        // Mobile: use native Google Sign-In flow (v7.2.0 API)
         final GoogleSignInAccount googleUser;
         try {
           googleUser = await _googleSignIn.authenticate();
-        } catch (_) {
+        } catch (e) {
+          debugPrint('Google Sign-In Authentication failed: $e');
           return null; // User cancelled or error
         }
 
-        final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
         final credential = firebase.GoogleAuthProvider.credential(
           idToken: googleAuth.idToken,
         );

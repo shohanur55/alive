@@ -424,6 +424,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future<void> _goToHome() async {
+    final emailPhone = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (emailPhone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter email or phone number')),
+      );
+      return;
+    }
+
+    if (password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your password')),
+      );
+      return;
+    }
+
     if (!mounted) return;
     Navigator.pushReplacement(
       context,
@@ -434,6 +451,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _signInWithGoogle() async {
     final result = await ref.read(authViewModelProvider.notifier).loginWithGoogle();
     if (result != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Logged in as ${result.email ?? "User"}')),
+      );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
