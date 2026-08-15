@@ -1,0 +1,78 @@
+part of '../router.dart';
+
+StatefulShellRoute _shellRoutes(Ref ref) {
+  return StatefulShellRoute.indexedStack(
+    builder: (context, state, navigationShell) {
+      return NavigationShell(statefulNavigationShell: navigationShell);
+    },
+    branches: [
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: Routes.home,
+            name: Routes.home,
+            pageBuilder: (context, state) {
+              return const MaterialPage(child: HomePage());
+            },
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: Routes.party,
+            name: Routes.party,
+            pageBuilder: (context, state) {
+              return const MaterialPage(
+                child: Scaffold(
+                  body: Center(child: Text('Party Screen')),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: Routes.goLive,
+            name: Routes.goLive,
+            pageBuilder: (context, state) {
+              return const MaterialPage(
+                child: Scaffold(
+                  body: Center(child: Text('Go Live Screen')),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: Routes.chats,
+            name: Routes.chats,
+            pageBuilder: (context, state) {
+              return const MaterialPage(
+                child: Scaffold(
+                  body: Center(child: Text('Chats Screen')),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: [
+          GoRoute(
+            path: Routes.profile,
+            name: Routes.profile,
+            pageBuilder: (context, state) {
+              return const MaterialPage(child: ProfilePage());
+            },
+          ),
+        ],
+      ),
+    ],
+  );
+}

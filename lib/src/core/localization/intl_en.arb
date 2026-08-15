@@ -1,0 +1,84 @@
+{
+    "english": "English",
+    "bangla": "বাংলা",
+    "arabic": "العربية",
+    "home": "Home",
+    "profile": "Profile",
+    "login": "Login",
+    "createNewPassword": "Create New password",
+    "createNewPasswordHint": "Your new password must be different from previous used passwords.",
+    "resetPassword": "Reset Password",
+    "newPassword": "New Password",
+    "passwordChangeSuccess":"Password Changed Successfully",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "isRequired": "This field is required",
+    "validEmail": "Please enter valid email address",
+    "enterAssociatedEmail": "Enter the email associated with your account and we’ll send an email with instructions to reset your password.",
+    "minLengthValidation": "This field must be at least {min} characters long",
+    "@minLengthValidation": {
+        "description": "Error message for minimum length validation",
+        "placeholders": {
+            "min": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "maxLengthValidation": "This field must be at most {max} characters long",
+    "@maxLengthValidation": {
+        "description": "Error message for maximum length validation",
+        "placeholders": {
+            "max": {
+                "type": "int",
+                "example": "20"
+            }
+        }
+    },
+    "yourPasswordChanged": "Your password has been changed successfully.",
+    "confirmPassword": "Confirm Password",
+    "logout": "Logout",
+    "getStarted": "Get Started",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password",
+    "backToLogin": "Back to login",
+    "continueAction": "Continue",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "email": "Email",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "dontHaveAccount": "Don't have an account? ",
+    "alreadyHaveAccount": "Already have an account? ",
+    "checkYourMail": "Check your mail",
+    "enterVerificationCode": "Please enter 4 digit code sent to your mail hello**@gmail.com.",
+    "didntGetCode": "Didn't get a code? ",
+    "clickToResend": "Click to resend",
+    "didNotReceiveEmail": "Did not receive the email? Check your spam filter. or ",
+    "tryAnotherEmail": "try another email address",
+    "learnFlutterTitle": "Learn Flutter with comprehensive tutorials.",
+    "learnFlutterSubtitle": "Step-by-step guides for building Flutter apps.",
+    "learnFlutterDescription": "Get notifications for new tutorials and updates.",
+    "joinCommunityTitle": "Join the Flutter community.",
+    "joinCommunitySubtitle": "Connect with other Flutter developers.",
+    "joinCommunityDescription": "Participate in community events and discussions.",
+    "buildDeployTitle": "Build and deploy Flutter apps easily.",
+    "buildDeploySubtitle": "Access tools and resources for app development.",
+    "buildDeployDescription": "Deploy your apps to multiple platforms with ease.",
+    "passwordMinLengthValidation": "Password must be at least {minLength} characters",
+    "@passwordMinLengthValidation": {
+        "description": "Error message for password minimum length validation",
+        "placeholders": {
+            "minLength": {
+                "type": "String"
+            }
+        }
+    },
+    "passwordNumberValidation": "Password must contain at least one number",
+    "passwordLowerCaseValidation": "Password must contain at least one lowercase letter",
+    "passwordUpperCaseValidation": "Password must contain at least one uppercase letter",
+    "passwordSpecialCharValidation": "Password must contain at least one special character",
+    "passwordMismatchValidation": "Passwords do not match"
+}

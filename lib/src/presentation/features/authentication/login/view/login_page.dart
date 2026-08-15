@@ -1,0 +1,465 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../../core/utiliity/wave_clippers.dart';
+import '../../../../core/router/routes.dart';
+import '../../../../core/widgets/custom_text_field.dart';
+import '../riverpod/login_provider.dart';
+
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscureText = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final loginState = ref.watch(loginProvider);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            sliver: SliverToBoxAdapter(
+              child: _buildTopSection(statusBarHeight),
+            ),
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: _buildBottomSection(loginState),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTopSection(double statusBarHeight) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: statusBarHeight + 20.h),
+        _buildAppLogo(),
+        SizedBox(height: 24.h),
+        Center(
+          child: Text(
+            'Welcome back! 👋',
+            style: TextStyle(
+              fontSize: 26.sp,
+              fontWeight: FontWeight.w800,
+              color: const Color(0xFF111111),
+              letterSpacing: -0.5,
+              fontFamily: 'Inter',
+            ),
+          ),
+        ),
+        SizedBox(height: 6.h),
+        Center(
+          child: Text(
+            'Sign in to continue your live streaming journey.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 13.sp,
+              color: const Color(0xFF7A7A7A),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        SizedBox(height: 28.h),
+        Text(
+          'Email ID or Phone Number',
+          style: TextStyle(
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF8A8A8A),
+          ),
+        ),
+        SizedBox(height: 6.h),
+        CustomTextField(
+          controller: _emailController,
+          hintText: 'Enter Registered Email or Phone No.',
+          keyboardType: TextInputType.emailAddress,
+        ),
+        SizedBox(height: 16.h),
+        Text(
+          'Password',
+          style: TextStyle(
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF8A8A8A),
+          ),
+        ),
+        SizedBox(height: 6.h),
+        CustomTextField(
+          controller: _passwordController,
+          hintText: 'Enter your password',
+          obscureText: _obscureText,
+          keyboardType: TextInputType.visiblePassword,
+          textInputAction: TextInputAction.done,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscureText
+                  ? Icons.visibility_outlined
+                  : Icons.visibility_off_outlined,
+              color: const Color(0xFF8A8A8A),
+              size: 20.w,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+          ),
+        ),
+        SizedBox(height: 10.h),
+        Align(
+          alignment: Alignment.centerRight,
+          child: GestureDetector(
+            onTap: () {
+              context.pushNamed(Routes.resetPassword);
+            },
+            child: Text(
+              'Forgot Password?',
+              style: TextStyle(
+                fontSize: 13.sp,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF12B31A),
+                decoration: TextDecoration.underline,
+                decorationColor: const Color(0xFF12B31A),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 24.h),
+        _buildPrimaryLoginButton(
+          label: 'Login',
+          onTap: _goToHome,
+        ),
+        SizedBox(height: 16.h),
+      ],
+    );
+  }
+
+  Widget _buildBottomSection(AsyncValue<dynamic> loginState) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: ClipPath(
+            clipper: DarkBottomWaveClipper(),
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF09860D),
+                    Color(0xFF73DF0C),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned.fill(
+          child: ClipPath(
+            clipper: MainBottomWaveClipper(),
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF037C07),
+                    Color(0xFF78DB1C),
+                    Color(0xFFB9E346),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(height: 30.h),
+              _buildDividerLabel('or continue with'),
+              SizedBox(height: 18.h),
+              _buildSocialLoginButton(
+                label: 'Continue with Google',
+                assetPath: 'asset/google.png',
+                isLoading: loginState.isLoading,
+                onTap: loginState.isLoading ? null : _signInWithGoogle,
+              ),
+              SizedBox(height: 12.h),
+              _buildSocialLoginButton(
+                label: 'Continue with Facebook',
+                assetPath: 'asset/facebook.png',
+                onTap: () {},
+              ),
+              SizedBox(height: 24.h),
+              GestureDetector(
+                onTap: () {
+                  context.pushNamed(Routes.registration);
+                },
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    children: [
+                      const TextSpan(text: "Don't have an account? "),
+                      TextSpan(
+                        text: 'Sign Up',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
+                          color: const Color(0xFAFFFFFF),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.h),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAppLogo() {
+    return Center(
+      child: Container(
+        width: 80.w,
+        height: 80.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x14000000),
+              blurRadius: 24.r,
+              offset: Offset(0, 12.h),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.r),
+          child: Image.asset(
+            'asset/logo.png',
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFB2EC0B), Color(0xFF12B31A)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Alive',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    Icon(
+                      Icons.videocam,
+                      color: Colors.white,
+                      size: 24.w,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrimaryLoginButton({
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 54.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(27.r),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFB2EC0B), Color(0xFF12B31A)],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x4012B31A),
+              blurRadius: 16.r,
+              offset: Offset(0, 8.h),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSocialLoginButton({
+    required String label,
+    required String assetPath,
+    VoidCallback? onTap,
+    bool isLoading = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 50.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25.r),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x0F000000),
+              blurRadius: 12.r,
+              offset: Offset(0, 4.h),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isLoading)
+              SizedBox(
+                width: 20.w,
+                height: 20.w,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Color(0xFF12B31A),
+                ),
+              )
+            else ...[
+              Image.asset(
+                assetPath,
+                width: 20.w,
+                height: 20.w,
+              ),
+              SizedBox(width: 12.w),
+              Text(
+                label,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDividerLabel(String label) {
+    return Row(
+      children: [
+        Expanded(
+          child: Divider(
+            color: const Color(0x66FFFFFF),
+            thickness: 1.w,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Divider(
+            color: const Color(0x66FFFFFF),
+            thickness: 1.w,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _goToHome() async {
+    final emailPhone = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (emailPhone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter email or phone number')),
+      );
+      return;
+    }
+
+    if (password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your password')),
+      );
+      return;
+    }
+
+    if (!mounted) return;
+    context.goNamed(Routes.home);
+  }
+
+  Future<void> _signInWithGoogle() async {
+    final user = await ref.read(loginProvider.notifier).loginWithGoogle();
+    if (user != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Logged in as ${user.email ?? "User"}')),
+      );
+      context.goNamed(Routes.home);
+    }
+  }
+}
