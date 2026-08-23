@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/theme/theme.dart';
+
 class HomeCountrySelector extends StatelessWidget {
   const HomeCountrySelector({
     super.key,
@@ -23,7 +25,7 @@ class HomeCountrySelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: context.padding.p16.w),
       physics: const BouncingScrollPhysics(),
       child: Row(
         children: _countries.map((country) {
@@ -32,38 +34,38 @@ class HomeCountrySelector extends StatelessWidget {
           final bool isActive = activeCountry == name;
 
           return Padding(
-            padding: EdgeInsets.only(right: 10.w),
+            padding: EdgeInsets.only(right: context.spacing.s10.w),
             child: InkWell(
               onTap: () => onCountrySelected(name),
-              borderRadius: BorderRadius.circular(20.r),
+              borderRadius: BorderRadius.circular(context.radius.r20.r),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
                 decoration: BoxDecoration(
                   color: isActive
-                      ? const Color(0xFF12B31A).withValues(alpha: 0.08)
-                      : Colors.white,
+                      ? context.color.primary.withValues(alpha: 0.08)
+                      : context.color.scaffoldBackground,
                   borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(
                     color: isActive
-                        ? const Color(0xFF12B31A)
-                        : const Color(0xFFE0E0E0),
+                        ? context.color.primary
+                        : context.color.border,
                     width: isActive ? 1.5.w : 1.w,
                   ),
                 ),
                 child: Row(
                   children: [
-                    Text(emoji, style: TextStyle(fontSize: 14.sp)),
+                    Text(emoji, style: context.textStyle.bodyMedium),
                     SizedBox(width: 6.w),
                     Text(
                       name,
-                      style: TextStyle(
+                      style: context.textStyle.bodyMedium.copyWith(
                         fontSize: 12.sp,
                         fontWeight:
                             isActive ? FontWeight.w700 : FontWeight.w500,
                         color: isActive
-                            ? Colors.black
-                            : const Color(0xFF616161),
+                            ? context.color.text.primary
+                            : context.color.text.secondary,
                       ),
                     ),
                   ],
@@ -76,3 +78,4 @@ class HomeCountrySelector extends StatelessWidget {
     );
   }
 }
+

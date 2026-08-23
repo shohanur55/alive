@@ -26,6 +26,35 @@ abstract class _Typography extends StatelessWidget {
   Widget build(BuildContext context);
 }
 
+class DisplayLargeText extends _Typography {
+  const DisplayLargeText(
+    super.text, {
+    super.key,
+    super.textAlign,
+    super.maxLines,
+    super.overflow,
+    super.softWrap,
+    super.textDirection,
+    super.semanticsLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: overflow,
+      softWrap: softWrap,
+      textDirection: textDirection,
+      semanticsLabel: semanticsLabel,
+      style: context.textStyle.displayLarge.copyWith(
+        color: context.color.text.primary,
+      ),
+    );
+  }
+}
+
 class HeadingLargeText extends _Typography {
   const HeadingLargeText(
     super.text, {
@@ -50,6 +79,35 @@ class HeadingLargeText extends _Typography {
       semanticsLabel: semanticsLabel,
       style: context.textStyle.headingLarge.copyWith(
         color: context.color.text.primary,
+      ),
+    );
+  }
+}
+
+class LabelLargeText extends _Typography {
+  const LabelLargeText(
+    super.text, {
+    super.key,
+    super.textAlign,
+    super.maxLines,
+    super.overflow,
+    super.softWrap,
+    super.textDirection,
+    super.semanticsLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: overflow,
+      softWrap: softWrap,
+      textDirection: textDirection,
+      semanticsLabel: semanticsLabel,
+      style: context.textStyle.labelLarge.copyWith(
+        color: context.color.text.secondary,
       ),
     );
   }

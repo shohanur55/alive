@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/theme/theme.dart';
+
 class HomeBottomNavigationBar extends StatelessWidget {
   const HomeBottomNavigationBar({
     super.key,
@@ -24,7 +26,9 @@ class HomeBottomNavigationBar extends StatelessWidget {
             bottom: 0,
             child: CustomPaint(
               size: Size(MediaQuery.sizeOf(context).width, 76.h),
-              painter: _BottomNavBarPainter(),
+              painter: _BottomNavBarPainter(
+                gradientColors: context.color.brandGradient,
+              ),
             ),
           ),
           Positioned(
@@ -54,10 +58,10 @@ class HomeBottomNavigationBar extends StatelessWidget {
                       SizedBox(height: 20.h),
                       Text(
                         'Go Live',
-                        style: TextStyle(
+                        style: context.textStyle.bodyMedium.copyWith(
                           color: activeIndex == 2
-                              ? Colors.white
-                              : Colors.white.withValues(alpha: 0.5),
+                              ? context.color.onPrimary
+                              : context.color.onPrimary.withValues(alpha: 0.5),
                           fontSize: 12.sp,
                           fontWeight:
                               activeIndex == 2 ? FontWeight.w800 : FontWeight.w600,
@@ -90,7 +94,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                 width: 50.w,
                 height: 50.w,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.color.scaffoldBackground,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
@@ -103,7 +107,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                 child: Center(
                   child: Icon(
                     Icons.sensors_rounded,
-                    color: const Color(0xFF12B31A),
+                    color: context.color.primary,
                     size: 26.w,
                   ),
                 ),
@@ -138,14 +142,18 @@ class _NavItem extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: isActive ? Colors.white : Colors.white.withValues(alpha: 0.5),
+            color: isActive
+                ? context.color.onPrimary
+                : context.color.onPrimary.withValues(alpha: 0.5),
             size: 26.w,
           ),
           SizedBox(height: 4.h),
           Text(
             label,
-            style: TextStyle(
-              color: isActive ? Colors.white : Colors.white.withValues(alpha: 0.7),
+            style: context.textStyle.bodyMedium.copyWith(
+              color: isActive
+                  ? context.color.onPrimary
+                  : context.color.onPrimary.withValues(alpha: 0.7),
               fontSize: 12.sp,
               fontWeight: isActive ? FontWeight.w800 : FontWeight.w600,
             ),
@@ -157,11 +165,15 @@ class _NavItem extends StatelessWidget {
 }
 
 class _BottomNavBarPainter extends CustomPainter {
+  _BottomNavBarPainter({required this.gradientColors});
+
+  final List<Color> gradientColors;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..shader = const LinearGradient(
-        colors: [Color(0xFFB2EC0B), Color(0xFF12B31A)],
+      ..shader = LinearGradient(
+        colors: gradientColors,
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
@@ -207,3 +219,4 @@ class _BottomNavBarPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+

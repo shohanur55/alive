@@ -6,6 +6,9 @@ class ColorExtension {
     required this.icon,
     required this.onPrimary,
     required this.primary,
+    required this.accent,
+    required this.inputFill,
+    required this.brandGradient,
     required this.scaffoldBackground,
     required this.success,
     required this.error,
@@ -24,6 +27,9 @@ class ColorExtension {
   final Color icon;
   final Color onPrimary;
   final Color primary;
+  final Color accent;
+  final Color inputFill;
+  final List<Color> brandGradient;
   final Color scaffoldBackground;
   final Color success;
   final Color error;
@@ -46,6 +52,9 @@ class LightColorExtension extends ThemeExtension<LightColorExtension>
     this.icon = _Primitive.neutral40,
     this.onPrimary = _Primitive.neutral0,
     this.primary = _Primitive.brand,
+    this.accent = _Primitive.accent,
+    this.inputFill = _Primitive.neutral5,
+    this.brandGradient = const [_Primitive.accent, _Primitive.brand],
     this.scaffoldBackground = _Primitive.neutral0,
     this.success = _Primitive.success,
     this.error = _Primitive.error,
@@ -71,6 +80,15 @@ class LightColorExtension extends ThemeExtension<LightColorExtension>
 
   @override
   final Color primary;
+
+  @override
+  final Color accent;
+
+  @override
+  final Color inputFill;
+
+  @override
+  final List<Color> brandGradient;
 
   @override
   final Color scaffoldBackground;
@@ -114,6 +132,9 @@ class LightColorExtension extends ThemeExtension<LightColorExtension>
     Color? icon,
     Color? onPrimary,
     Color? primary,
+    Color? accent,
+    Color? inputFill,
+    List<Color>? brandGradient,
     Color? scaffoldBackground,
     Color? success,
     Color? error,
@@ -132,6 +153,9 @@ class LightColorExtension extends ThemeExtension<LightColorExtension>
       icon: icon ?? this.icon,
       onPrimary: onPrimary ?? this.onPrimary,
       primary: primary ?? this.primary,
+      accent: accent ?? this.accent,
+      inputFill: inputFill ?? this.inputFill,
+      brandGradient: brandGradient ?? this.brandGradient,
       scaffoldBackground: scaffoldBackground ?? this.scaffoldBackground,
       success: success ?? this.success,
       error: error ?? this.error,
@@ -161,6 +185,9 @@ class LightColorExtension extends ThemeExtension<LightColorExtension>
       icon: Color.lerp(icon, other.icon, t)!,
       onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
       primary: Color.lerp(primary, other.primary, t)!,
+      accent: Color.lerp(accent, other.accent, t)!,
+      inputFill: Color.lerp(inputFill, other.inputFill, t)!,
+      brandGradient: t < 0.5 ? brandGradient : other.brandGradient,
       scaffoldBackground: Color.lerp(
         scaffoldBackground,
         other.scaffoldBackground,
@@ -190,6 +217,9 @@ class DarkColorExtension extends ThemeExtension<DarkColorExtension>
     this.icon = _Primitive.neutral0,
     this.onPrimary = _Primitive.neutral90,
     this.primary = _Primitive.brand,
+    this.accent = _Primitive.accent,
+    this.inputFill = _Primitive.neutral60,
+    this.brandGradient = const [_Primitive.accent, _Primitive.brand],
     this.scaffoldBackground = _Primitive.neutral60,
     this.success = _Primitive.success,
     this.error = _Primitive.error,
@@ -215,6 +245,15 @@ class DarkColorExtension extends ThemeExtension<DarkColorExtension>
 
   @override
   final Color primary;
+
+  @override
+  final Color accent;
+
+  @override
+  final Color inputFill;
+
+  @override
+  final List<Color> brandGradient;
 
   @override
   final Color scaffoldBackground;
@@ -258,6 +297,9 @@ class DarkColorExtension extends ThemeExtension<DarkColorExtension>
     Color? icon,
     Color? onPrimary,
     Color? primary,
+    Color? accent,
+    Color? inputFill,
+    List<Color>? brandGradient,
     Color? scaffoldBackground,
     Color? success,
     Color? error,
@@ -276,6 +318,9 @@ class DarkColorExtension extends ThemeExtension<DarkColorExtension>
       icon: icon ?? this.icon,
       onPrimary: onPrimary ?? this.onPrimary,
       primary: primary ?? this.primary,
+      accent: accent ?? this.accent,
+      inputFill: inputFill ?? this.inputFill,
+      brandGradient: brandGradient ?? this.brandGradient,
       scaffoldBackground: scaffoldBackground ?? this.scaffoldBackground,
       success: success ?? this.success,
       error: error ?? this.error,
@@ -305,6 +350,9 @@ class DarkColorExtension extends ThemeExtension<DarkColorExtension>
       icon: Color.lerp(icon, other.icon, t)!,
       onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
       primary: Color.lerp(primary, other.primary, t)!,
+      accent: Color.lerp(accent, other.accent, t)!,
+      inputFill: Color.lerp(inputFill, other.inputFill, t)!,
+      brandGradient: t < 0.5 ? brandGradient : other.brandGradient,
       scaffoldBackground: Color.lerp(
         scaffoldBackground,
         other.scaffoldBackground,
@@ -316,6 +364,7 @@ class DarkColorExtension extends ThemeExtension<DarkColorExtension>
       info: Color.lerp(info, other.info, t)!,
       disabled: Color.lerp(disabled, other.disabled, t)!,
       active: Color.lerp(active, other.active, t)!,
+      inactive: Color.lerp(inactive, other.inactive, t)!,
       // Complex objects are harder to lerp, so we'll just use whichever is
       // appropriate based on animation progress
       appBar: t < 0.5 ? appBar : other.appBar,

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/theme/theme.dart';
 import '../riverpod/home_provider.dart';
 import '../widgets/home_country_selector.dart';
 import '../widgets/home_header.dart';
 import '../widgets/home_tab_selector.dart';
 import '../widgets/stream_card.dart';
+
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -43,10 +45,10 @@ class HomePage extends ConsumerWidget {
             SizedBox(height: 16.h),
             Expanded(
               child: homeState.isLoading
-                  ? const Center(
+                  ? Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(0xFF12B31A),
+                          context.color.primary,
                         ),
                       ),
                     )
@@ -57,6 +59,7 @@ class HomePage extends ConsumerWidget {
       ),
     );
   }
+
 
   Widget _buildStreamGrid(HomeState homeState, Home homeNotifier) {
     return GridView.builder(

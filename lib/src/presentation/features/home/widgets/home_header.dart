@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/theme/theme.dart';
+
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: context.padding.p16.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -20,13 +22,13 @@ class HomeHeader extends StatelessWidget {
                   Container(
                     width: 38.w,
                     height: 38.w,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF5F5F5),
+                    decoration: BoxDecoration(
+                      color: context.color.inputFill,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.notifications_none_outlined,
-                      color: const Color(0xFF757575),
+                      color: context.color.icon,
                       size: 20.w,
                     ),
                   ),
@@ -35,14 +37,14 @@ class HomeHeader extends StatelessWidget {
                     right: -2.w,
                     child: Container(
                       padding: EdgeInsets.all(4.r),
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFFF0000),
+                      decoration: BoxDecoration(
+                        color: context.color.error,
                         shape: BoxShape.circle,
                       ),
                       child: Text(
                         '3',
-                        style: TextStyle(
-                          color: Colors.white,
+                        style: context.textStyle.bodySmall.copyWith(
+                          color: context.color.onPrimary,
                           fontSize: 8.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -51,20 +53,20 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: 12.w),
+              SizedBox(width: context.spacing.s12.w),
               Container(
                 width: 38.w,
                 height: 38.w,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFB2EC0B), Color(0xFF12B31A)],
+                  gradient: LinearGradient(
+                    colors: context.color.brandGradient,
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0x3312B31A),
+                      color: context.color.primary.withValues(alpha: 0.2),
                       blurRadius: 8.r,
                       offset: const Offset(0, 4),
                     ),
@@ -72,7 +74,7 @@ class HomeHeader extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.card_giftcard_rounded,
-                  color: Colors.white,
+                  color: context.color.onPrimary,
                   size: 20.w,
                 ),
               ),
@@ -91,26 +93,26 @@ class _AppLogo extends StatelessWidget {
       width: 40.w,
       height: 40.w,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
+        borderRadius: BorderRadius.circular(context.radius.r10.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0x3312B31A),
+            color: context.color.primary.withValues(alpha: 0.2),
             blurRadius: 8.r,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.r),
+        borderRadius: BorderRadius.circular(context.radius.r10.r),
         child: Image.asset(
           'asset/logo.png',
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) {
             return Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFB2EC0B), Color(0xFF12B31A)],
+                borderRadius: BorderRadius.circular(context.radius.r10.r),
+                gradient: LinearGradient(
+                  colors: context.color.brandGradient,
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -121,14 +123,14 @@ class _AppLogo extends StatelessWidget {
                   Text(
                     'Alive',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: context.color.onPrimary,
                       fontSize: 8.sp,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                   Icon(
                     Icons.videocam_rounded,
-                    color: Colors.white,
+                    color: context.color.onPrimary,
                     size: 14.w,
                   ),
                 ],
@@ -140,3 +142,4 @@ class _AppLogo extends StatelessWidget {
     );
   }
 }
+

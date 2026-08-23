@@ -6,6 +6,7 @@ import 'src/theme_data.dart';
 import 'src/theme_extensions/extensions.dart';
 
 export 'src/theme_data.dart';
+export 'src/theme_extensions/extensions.dart';
 
 /// Extension on [BuildContext] to provide convenient access to theme-related
 /// properties and utilities.
@@ -96,16 +97,16 @@ extension BuildContextExtension on BuildContext {
   }
 
   /// Gets the spacing dimensions from the current theme.
-  get spacing => dimensions.spacing;
+  AppSpacing get spacing => dimensions.spacing;
 
   /// Gets the padding dimensions from the current theme.
-  get padding => dimensions.padding;
+  AppPadding get padding => dimensions.padding;
 
   /// Gets the margin dimensions from the current theme.
-  get margin => dimensions.margin;
+  AppMargin get margin => dimensions.margin;
 
   /// Gets the border radius dimensions from the current theme.
-  get radius => dimensions.radius;
+  AppRadius get radius => dimensions.radius;
 
   /// Gets the light theme data configuration.
   ///

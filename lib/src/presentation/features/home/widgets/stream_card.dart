@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/theme/theme.dart';
 import '../../../../domain/entities/stream_entity.dart';
 
 class StreamCard extends StatelessWidget {
@@ -17,7 +18,7 @@ class StreamCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(context.radius.r20.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -27,7 +28,7 @@ class StreamCard extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(context.radius.r20.r),
         child: Stack(
           children: [
             Positioned.fill(
@@ -37,11 +38,11 @@ class StreamCard extends StatelessWidget {
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Container(
-                    color: const Color(0xFFEEEEEE),
-                    child: const Center(
+                    color: context.color.inputFill,
+                    child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(0xFF12B31A),
+                          context.color.primary,
                         ),
                       ),
                     ),
@@ -49,10 +50,10 @@ class StreamCard extends StatelessWidget {
                 },
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                    color: const Color(0xFFE0E0E0),
+                    color: context.color.border,
                     child: Icon(
                       Icons.broken_image_outlined,
-                      color: Colors.grey,
+                      color: context.color.disabled,
                       size: 32.w,
                     ),
                   );
@@ -82,7 +83,7 @@ class StreamCard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.4),
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(context.radius.r12.r),
                 ),
                 child: Row(
                   children: [
@@ -121,7 +122,7 @@ class StreamCard extends StatelessWidget {
                       ),
                     ),
                     child: CircleAvatar(
-                      backgroundColor: Colors.grey.shade400,
+                      backgroundColor: context.color.disabled,
                       child: Icon(
                         Icons.person,
                         color: Colors.white,
@@ -151,15 +152,16 @@ class StreamCard extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: onFollowToggle,
-                    borderRadius: BorderRadius.circular(10.r),
+                    borderRadius: BorderRadius.circular(context.radius.r10.r),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 8.w,
                         vertical: 4.h,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFB2EC0B),
-                        borderRadius: BorderRadius.circular(10.r),
+                        color: context.color.accent,
+                        borderRadius:
+                            BorderRadius.circular(context.radius.r10.r),
                       ),
                       child: Text(
                         stream.isFollowing ? 'Following' : '+ Follow',
@@ -180,3 +182,4 @@ class StreamCard extends StatelessWidget {
     );
   }
 }
+

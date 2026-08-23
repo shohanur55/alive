@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/utiliity/wave_clippers.dart';
 import '../../../../core/router/routes.dart';
+import '../../../../core/theme/theme.dart';
 import '../../../../core/widgets/custom_text_field.dart';
+import '../../../../core/widgets/text/typography.dart';
 import '../riverpod/login_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -33,11 +36,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final loginState = ref.watch(loginProvider);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.color.scaffoldBackground,
       body: CustomScrollView(
         slivers: [
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: context.padding.p24.w),
             sliver: SliverToBoxAdapter(
               child: _buildTopSection(statusBarHeight),
             ),
@@ -55,58 +58,30 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: statusBarHeight + 20.h),
+        Gap(statusBarHeight + context.spacing.s20.h),
         _buildAppLogo(),
-        SizedBox(height: 24.h),
-        Center(
-          child: Text(
-            'Welcome back! 👋',
-            style: TextStyle(
-              fontSize: 26.sp,
-              fontWeight: FontWeight.w800,
-              color: const Color(0xFF111111),
-              letterSpacing: -0.5,
-              fontFamily: 'Inter',
-            ),
-          ),
+        Gap(context.spacing.s24.h),
+        const Center(
+          child: DisplayLargeText('Welcome back! 👋'),
         ),
-        SizedBox(height: 6.h),
-        Center(
-          child: Text(
+        Gap(context.spacing.s6.h),
+        const Center(
+          child: BodyMediumText.secondary(
             'Sign in to continue your live streaming journey.',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 13.sp,
-              color: const Color(0xFF7A7A7A),
-              fontWeight: FontWeight.w400,
-            ),
           ),
         ),
-        SizedBox(height: 28.h),
-        Text(
-          'Email ID or Phone Number',
-          style: TextStyle(
-            fontSize: 13.sp,
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF8A8A8A),
-          ),
-        ),
-        SizedBox(height: 6.h),
+        Gap(context.spacing.s28.h),
+        const LabelLargeText('Email ID or Phone Number'),
+        Gap(context.spacing.s6.h),
         CustomTextField(
           controller: _emailController,
           hintText: 'Enter Registered Email or Phone No.',
           keyboardType: TextInputType.emailAddress,
         ),
-        SizedBox(height: 16.h),
-        Text(
-          'Password',
-          style: TextStyle(
-            fontSize: 13.sp,
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF8A8A8A),
-          ),
-        ),
-        SizedBox(height: 6.h),
+        Gap(context.spacing.s16.h),
+        const LabelLargeText('Password'),
+        Gap(context.spacing.s6.h),
         CustomTextField(
           controller: _passwordController,
           hintText: 'Enter your password',
@@ -118,7 +93,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               _obscureText
                   ? Icons.visibility_outlined
                   : Icons.visibility_off_outlined,
-              color: const Color(0xFF8A8A8A),
+              color: context.color.text.secondary,
               size: 20.w,
             ),
             onPressed: () {
@@ -128,7 +103,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             },
           ),
         ),
-        SizedBox(height: 10.h),
+        Gap(context.spacing.s10.h),
         Align(
           alignment: Alignment.centerRight,
           child: GestureDetector(
@@ -137,22 +112,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             },
             child: Text(
               'Forgot Password?',
-              style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF12B31A),
+              style: context.textStyle.labelLarge.copyWith(
+                color: context.color.primary,
                 decoration: TextDecoration.underline,
-                decorationColor: const Color(0xFF12B31A),
+                decorationColor: context.color.primary,
               ),
             ),
           ),
         ),
-        SizedBox(height: 24.h),
+        Gap(context.spacing.s24.h),
         _buildPrimaryLoginButton(
           label: 'Login',
           onTap: _goToHome,
         ),
-        SizedBox(height: 16.h),
+        Gap(context.spacing.s16.h),
       ],
     );
   }
@@ -164,11 +137,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           child: ClipPath(
             clipper: DarkBottomWaveClipper(),
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color(0xFF09860D),
-                    Color(0xFF73DF0C),
+                    context.color.primary.withValues(alpha: 0.8),
+                    context.color.accent,
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -181,13 +154,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           child: ClipPath(
             clipper: MainBottomWaveClipper(),
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF037C07),
-                    Color(0xFF78DB1C),
-                    Color(0xFFB9E346),
-                  ],
+                  colors: context.color.brandGradient,
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -196,53 +165,52 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: context.padding.p24.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(height: 30.h),
+              Gap(context.spacing.s30.h),
               _buildDividerLabel('or continue with'),
-              SizedBox(height: 18.h),
+              Gap(context.spacing.s16.h),
               _buildSocialLoginButton(
                 label: 'Continue with Google',
                 assetPath: 'asset/google.png',
                 isLoading: loginState.isLoading,
                 onTap: loginState.isLoading ? null : _signInWithGoogle,
               ),
-              SizedBox(height: 12.h),
+              Gap(context.spacing.s12.h),
               _buildSocialLoginButton(
                 label: 'Continue with Facebook',
                 assetPath: 'asset/facebook.png',
                 onTap: () {},
               ),
-              SizedBox(height: 24.h),
+              Gap(context.spacing.s24.h),
               GestureDetector(
                 onTap: () {
                   context.pushNamed(Routes.registration);
                 },
                 child: RichText(
                   text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.white,
+                    style: context.textStyle.bodyMedium.copyWith(
+                      color: context.color.onPrimary,
                       fontWeight: FontWeight.w600,
                     ),
                     children: [
                       const TextSpan(text: "Don't have an account? "),
                       TextSpan(
                         text: 'Sign Up',
-                        style: TextStyle(
+                        style: context.textStyle.bodyMedium.copyWith(
+                          color: context.color.onPrimary,
                           fontWeight: FontWeight.w800,
                           decoration: TextDecoration.underline,
-                          decorationColor: Colors.white,
-                          color: const Color(0xFAFFFFFF),
+                          decorationColor: context.color.onPrimary,
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 20.h),
+              Gap(context.spacing.s20.h),
             ],
           ),
         ),
@@ -256,17 +224,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         width: 80.w,
         height: 80.w,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(context.radius.r20.r),
           boxShadow: [
             BoxShadow(
-              color: const Color(0x14000000),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 24.r,
               offset: Offset(0, 12.h),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(context.radius.r20.r),
           child: Image.asset(
             'asset/logo.png',
             fit: BoxFit.cover,
@@ -274,28 +242,27 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFB2EC0B), Color(0xFF12B31A)],
+                  gradient: LinearGradient(
+                    colors: context.color.brandGradient,
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.circular(20.r),
+                  borderRadius: BorderRadius.circular(context.radius.r20.r),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Alive',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.sp,
+                      style: context.textStyle.headingSmall.copyWith(
+                        color: context.color.onPrimary,
                         fontWeight: FontWeight.bold,
                         letterSpacing: -0.5,
                       ),
                     ),
                     Icon(
                       Icons.videocam,
-                      color: Colors.white,
+                      color: context.color.onPrimary,
                       size: 24.w,
                     ),
                   ],
@@ -318,15 +285,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         width: double.infinity,
         height: 54.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(27.r),
-          gradient: const LinearGradient(
-            colors: [Color(0xFFB2EC0B), Color(0xFF12B31A)],
+          borderRadius: BorderRadius.circular(context.radius.r27.r),
+          gradient: LinearGradient(
+            colors: context.color.brandGradient,
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0x4012B31A),
+              color: context.color.primary.withValues(alpha: 0.25),
               blurRadius: 16.r,
               offset: Offset(0, 8.h),
             ),
@@ -335,9 +302,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         child: Center(
           child: Text(
             label,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.sp,
+            style: context.textStyle.bodyLarge.copyWith(
+              color: context.color.onPrimary,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -357,11 +323,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       child: Container(
         height: 50.h,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(25.r),
+          color: context.color.scaffoldBackground,
+          borderRadius: BorderRadius.circular(context.radius.r25.r),
           boxShadow: [
             BoxShadow(
-              color: const Color(0x0F000000),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 12.r,
               offset: Offset(0, 4.h),
             ),
@@ -374,9 +340,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               SizedBox(
                 width: 20.w,
                 height: 20.w,
-                child: const CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: Color(0xFF12B31A),
+                  color: context.color.primary,
                 ),
               )
             else ...[
@@ -385,12 +351,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 width: 20.w,
                 height: 20.w,
               ),
-              SizedBox(width: 12.w),
+              Gap(context.spacing.s12.w),
               Text(
                 label,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.sp,
+                style: context.textStyle.bodyMedium.copyWith(
+                  color: context.color.text.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -406,24 +371,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       children: [
         Expanded(
           child: Divider(
-            color: const Color(0x66FFFFFF),
+            color: context.color.onPrimary.withValues(alpha: 0.4),
             thickness: 1.w,
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          padding: EdgeInsets.symmetric(horizontal: context.padding.p12.w),
           child: Text(
             label,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w600,
+            style: context.textStyle.labelLarge.copyWith(
+              color: context.color.onPrimary,
             ),
           ),
         ),
         Expanded(
           child: Divider(
-            color: const Color(0x66FFFFFF),
+            color: context.color.onPrimary.withValues(alpha: 0.4),
             thickness: 1.w,
           ),
         ),
@@ -463,3 +426,4 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }
   }
 }
+

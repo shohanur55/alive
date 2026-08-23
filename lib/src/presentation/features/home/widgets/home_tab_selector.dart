@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/theme/theme.dart';
+
 class HomeTabSelector extends StatelessWidget {
   const HomeTabSelector({
     super.key,
@@ -16,23 +18,25 @@ class HomeTabSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: context.padding.p16.w),
       child: Row(
         children: _tabs.map((tab) {
           final bool isActive = activeTab == tab;
           return InkWell(
             onTap: () => onTabSelected(tab),
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(context.radius.r12.r),
             child: Padding(
               padding: EdgeInsets.only(right: 20.w, top: 6.h, bottom: 6.h),
               child: Text(
                 tab,
-                style: TextStyle(
-                  fontSize: isActive ? 16.sp : 14.sp,
+                style: (isActive
+                        ? context.textStyle.bodyLarge
+                        : context.textStyle.bodyMedium)
+                    .copyWith(
                   fontWeight: isActive ? FontWeight.w800 : FontWeight.w500,
                   color: isActive
-                      ? const Color(0xFF12B31A)
-                      : const Color(0xFF9E9E9E),
+                      ? context.color.primary
+                      : context.color.text.tertiary,
                 ),
               ),
             ),
@@ -42,3 +46,4 @@ class HomeTabSelector extends StatelessWidget {
     );
   }
 }
+

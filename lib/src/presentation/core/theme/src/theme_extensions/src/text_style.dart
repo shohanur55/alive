@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 class TextStyleExtension extends ThemeExtension<TextStyleExtension> {
   const TextStyleExtension();
 
+  TextStyle get displayLarge {
+    return const TextStyle(
+      height: 1.20,
+      fontSize: 26,
+      letterSpacing: -0.5,
+      fontWeight: FontWeight.w800,
+    );
+  }
+
   TextStyle get headingLarge {
     return const TextStyle(
       height: 1.33,
@@ -48,6 +57,24 @@ class TextStyleExtension extends ThemeExtension<TextStyleExtension> {
     );
   }
 
+  TextStyle get bodySmall {
+    return const TextStyle(
+      height: 1.33,
+      fontSize: 12,
+      letterSpacing: 0,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  TextStyle get labelLarge {
+    return const TextStyle(
+      height: 1.33,
+      fontSize: 13,
+      letterSpacing: 0,
+      fontWeight: FontWeight.w600,
+    );
+  }
+
   TextStyle get labelMedium {
     return const TextStyle(
       height: 1.15,
@@ -56,6 +83,7 @@ class TextStyleExtension extends ThemeExtension<TextStyleExtension> {
       fontWeight: FontWeight.w500,
     );
   }
+
 
   @override
   ThemeExtension<TextStyleExtension> copyWith() => const TextStyleExtension();
